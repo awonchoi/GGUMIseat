@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓 학급 자리 배치 시스템</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold fs-3" href="#">
+                <i class="fas fa-graduation-cap me-2"></i>
+                학급 자리 배치 시스템
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text text-light">
+                    <i class="fas fa-users me-1"></i>
+                    총 24명의 학생
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-4">
+        <!-- Control Panel -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm bg-white/90 backdrop-blur-sm">
+                    <div class="card-body text-center py-3">
+                        <div class="btn-group" role="group">
+                            <button id="shuffleBtn" class="btn btn-success btn-lg px-4 shadow-sm">
+                                <i class="fas fa-random me-2"></i>
+                                자리 섞기
+                            </button>
+                            <button id="manageStudentsBtn" class="btn btn-primary btn-lg px-4 shadow-sm">
+                                <i class="fas fa-users-cog me-2"></i>
+                                학생 명단 관리
+                            </button>
+                            <button id="saveBtn" class="btn btn-info btn-lg px-4 shadow-sm">
+                                <i class="fas fa-save me-2"></i>
+                                배치 저장
+                            </button>
+                            <button id="loadBtn" class="btn btn-warning btn-lg px-4 shadow-sm">
+                                <i class="fas fa-upload me-2"></i>
+                                배치 불러오기
+                            </button>
+                            <button id="resetBtn" class="btn btn-danger btn-lg px-4 shadow-sm">
+                                <i class="fas fa-undo me-2"></i>
+                                초기화
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Classroom Layout -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg bg-white/95 backdrop-blur-sm">
+                    <div class="card-header bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                        <h4 class="card-title mb-0 text-center">
+                            <i class="fas fa-chalkboard-teacher me-2"></i>
+                            교실 배치도
+                        </h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Blackboard -->
+                        <div class="blackboard bg-dark text-white text-center py-3 mb-4 rounded-lg shadow-sm">
+                            <i class="fas fa-chalkboard me-2"></i>
+                            칠판
+                        </div>
+                        
+                        <!-- Teacher's Desk -->
+                        <div class="text-center mb-4">
+                            <div class="d-inline-block bg-amber-100 border-2 border-amber-300 rounded-lg px-4 py-2">
+                                <i class="fas fa-desk text-amber-600 me-2"></i>
+                                <span class="text-amber-800 fw-semibold">교사 책상</span>
+                            </div>
+                        </div>
+
+                        <div class="seats-container">
+                            <div class="row g-3 mb-3" id="row1">
+                                <div class="col-md-4">
+                                    <div class="seat-pair d-flex gap-2">
+                                        <div class="seat flex-fill" data-seat="1">1번</div>
+                                        <div class="seat flex-fill" data-seat="2">2번</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="seat-pair d-flex gap-2">
+                                        <div class="seat flex-fill" data-seat="3">3번</div>
+                                        <div class="seat flex-fill" data-seat="4">4번</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="seat-pair d-flex gap-2">
+                                        <div class="seat flex-fill" data-seat="5">5번</div>
+                                        <div class="seat flex-fill" data-seat="6">6번</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-3" id="row2">
+                                <div class="col-md-4">
+                                    <div class="seat-pair d-flex gap-2">
+                                        <div class="seat flex-fill" data-seat="7">7번</div>
+                                        <div class="seat flex-fill" data-seat="8">8번</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="seat-pair d-flex gap-2">
+                                        <div class="seat flex-fill" data-seat="9">9번</div>
+                                        <div class="seat flex-fill" data-seat="10">10번</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="seat-pair d-flex gap-2">
+                                        <div class="seat flex-fill" data-seat="11">11번</div>
+                                        <div class="seat flex-fill" data-seat="12">12번</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-3" id="row3">
+                                <div class="col-md-4">
+                                    <div class="seat-pair d-flex gap-2">
+                                        <div class="seat flex-fill" data-seat="13">13번</div>
+                                        <div class="seat flex-fill" data-seat="14">14번</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="seat-pair d-flex gap-2">
+                                        <div class="seat flex-fill" data-seat="15">15번</div>
+                                        <div class="seat flex-fill" data-seat="16">16번</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="seat-pair d-flex gap-2">
+                                        <div class="seat flex-fill" data-seat="17">17번</div>
+                                        <div class="seat flex-fill" data-seat="18">18번</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3" id="row4">
+                                <div class="col-md-4">
+                                    <div class="seat-pair d-flex gap-2">
+                                        <div class="seat flex-fill" data-seat="19">19번</div>
+                                        <div class="seat flex-fill" data-seat="20">20번</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="seat-pair d-flex gap-2">
+                                        <div class="seat flex-fill" data-seat="21">21번</div>
+                                        <div class="seat flex-fill" data-seat="22">22번</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="seat-pair d-flex gap-2">
+                                        <div class="seat flex-fill" data-seat="23">23번</div>
+                                        <div class="seat flex-fill" data-seat="24">24번</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student List Sidebar -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-lg bg-white/95 backdrop-blur-sm h-100">
+                    <div class="card-header bg-gradient-to-r from-green-500 to-teal-600 text-white">
+                        <h4 class="card-title mb-0">
+                            <i class="fas fa-list-ul me-2"></i>
+                            학생 명단
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div class="text-center">
+                                    <div class="badge bg-success fs-6 p-2">
+                                        <i class="fas fa-check me-1"></i>
+                                        배정완료: <span id="assignedCount">0</span>명
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-center">
+                                    <div class="badge bg-secondary fs-6 p-2">
+                                        <i class="fas fa-clock me-1"></i>
+                                        대기중: <span id="unassignedCount">24</span>명
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="students row g-2" id="studentList">
+                            <div class="col-6"><div class="student">학생 1</div></div>
+                            <div class="col-6"><div class="student">학생 2</div></div>
+                            <div class="col-6"><div class="student">학생 3</div></div>
+                            <div class="col-6"><div class="student">학생 4</div></div>
+                            <div class="col-6"><div class="student">학생 5</div></div>
+                            <div class="col-6"><div class="student">학생 6</div></div>
+                            <div class="col-6"><div class="student">학생 7</div></div>
+                            <div class="col-6"><div class="student">학생 8</div></div>
+                            <div class="col-6"><div class="student">학생 9</div></div>
+                            <div class="col-6"><div class="student">학생 10</div></div>
+                            <div class="col-6"><div class="student">학생 11</div></div>
+                            <div class="col-6"><div class="student">학생 12</div></div>
+                            <div class="col-6"><div class="student">학생 13</div></div>
+                            <div class="col-6"><div class="student">학생 14</div></div>
+                            <div class="col-6"><div class="student">학생 15</div></div>
+                            <div class="col-6"><div class="student">학생 16</div></div>
+                            <div class="col-6"><div class="student">학생 17</div></div>
+                            <div class="col-6"><div class="student">학생 18</div></div>
+                            <div class="col-6"><div class="student">학생 19</div></div>
+                            <div class="col-6"><div class="student">학생 20</div></div>
+                            <div class="col-6"><div class="student">학생 21</div></div>
+                            <div class="col-6"><div class="student">학생 22</div></div>
+                            <div class="col-6"><div class="student">학생 23</div></div>
+                            <div class="col-6"><div class="student">학생 24</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 학생 명단 관리 모달 -->
+    <div class="modal fade" id="studentManagementModal" tabindex="-1" aria-labelledby="studentManagementModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                    <h5 class="modal-title fw-bold" id="studentManagementModalLabel">
+                        <i class="fas fa-users-cog me-2"></i>
+                        학생 명단 관리
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="fw-semibold mb-3">
+                                <i class="fas fa-edit text-primary me-2"></i>
+                                학생 이름 입력
+                            </h6>
+                            <div class="mb-3">
+                                <label for="studentNamesTextarea" class="form-label">
+                                    한 줄에 하나씩 학생 이름을 입력하세요 (최대 24명)
+                                </label>
+                                <textarea id="studentNamesTextarea" class="form-control" rows="12" 
+                                    placeholder="예시:&#10;김철수&#10;이영희&#10;박민수&#10;최지은&#10;..."></textarea>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button id="loadFromCurrentBtn" class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-download me-1"></i>
+                                    현재 명단 불러오기
+                                </button>
+                                <button id="clearNamesBtn" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-trash me-1"></i>
+                                    전체 삭제
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="fw-semibold mb-3">
+                                <i class="fas fa-list text-success me-2"></i>
+                                미리보기 (<span id="previewCount">0</span>/24명)
+                            </h6>
+                            <div id="studentPreview" class="border rounded p-3" style="min-height: 300px; max-height: 400px; overflow-y: auto;">
+                                <div class="text-muted text-center py-4">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    좌측에 학생 이름을 입력하면 여기에 미리보기가 표시됩니다.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <div class="me-auto">
+                        <small class="text-muted">
+                            <i class="fas fa-lightbulb me-1"></i>
+                            팁: 엑셀에서 복사해서 붙여넣기도 가능합니다
+                        </small>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-1"></i>
+                        취소
+                    </button>
+                    <button id="applyStudentListBtn" type="button" class="btn btn-primary">
+                        <i class="fas fa-check me-1"></i>
+                        명단 적용
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

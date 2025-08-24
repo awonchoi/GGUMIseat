@@ -1,0 +1,368 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #2d3748;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Custom CSS Variables */
+:root {
+    --primary-color: #4f46e5;
+    --secondary-color: #7c3aed;
+    --success-color: #059669;
+    --warning-color: #d97706;
+    --danger-color: #dc2626;
+    --info-color: #0284c7;
+    --seat-empty: #f8fafc;
+    --seat-occupied: #3b82f6;
+    --seat-hover: #e2e8f0;
+    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Enhanced Card Styles */
+.card {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow);
+}
+
+/* Gradient Backgrounds */
+.bg-gradient-to-r {
+    background: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.from-blue-600 {
+    --tw-gradient-from: #2563eb;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-purple-600 {
+    --tw-gradient-to: #9333ea;
+}
+
+.from-green-500 {
+    --tw-gradient-from: #10b981;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-teal-600 {
+    --tw-gradient-to: #0d9488;
+}
+
+/* Enhanced Button Styles */
+.btn {
+    font-weight: 500;
+    border-radius: 0.75rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Seat Styling */
+.seat {
+    background: linear-gradient(145deg, #f8fafc, #e2e8f0);
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 16px 12px;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    position: relative;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.seat:hover {
+    background: linear-gradient(145deg, #e2e8f0, #cbd5e1);
+    transform: translateY(-3px) scale(1.02);
+    border-color: #94a3b8;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+}
+
+.seat.occupied {
+    background: linear-gradient(145deg, #3b82f6, #2563eb);
+    color: white;
+    border-color: #1d4ed8;
+    box-shadow: 0 8px 25px -5px rgba(59, 130, 246, 0.5);
+}
+
+.seat.occupied:hover {
+    background: linear-gradient(145deg, #2563eb, #1d4ed8);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 35px -5px rgba(59, 130, 246, 0.6);
+}
+
+/* Seat Animation */
+.seat.shuffling {
+    animation: seatShuffle 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes seatShuffle {
+    0% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(0.8) rotate(5deg); }
+    50% { transform: scale(1.1) rotate(-5deg); }
+    75% { transform: scale(0.9) rotate(2deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Enhanced Blackboard */
+.blackboard {
+    background: linear-gradient(145deg, #1f2937, #111827);
+    border: 3px solid #374151;
+    font-size: 18px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Student List Styling */
+.student {
+    background: linear-gradient(145deg, #6b7280, #4b5563);
+    color: white;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.student:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.student.assigned {
+    background: linear-gradient(145deg, #059669, #047857);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.student.unassigned {
+    background: linear-gradient(145deg, #6b7280, #4b5563);
+}
+
+/* Amber color classes for teacher desk */
+.bg-amber-100 {
+    background-color: #fef3c7;
+}
+
+.border-amber-300 {
+    border-color: #fcd34d;
+}
+
+.text-amber-600 {
+    color: #d97706;
+}
+
+.text-amber-800 {
+    color: #92400e;
+}
+
+/* Badge Enhancements */
+.badge {
+    font-weight: 500;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .seat {
+        font-size: 12px;
+        padding: 12px 8px;
+        min-height: 60px;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .btn-group .btn {
+        border-radius: 0.75rem !important;
+    }
+    
+    .seat {
+        font-size: 11px;
+        padding: 8px;
+        min-height: 50px;
+    }
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Backdrop Blur Support */
+.backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+}
+
+.bg-white\/90 {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.bg-white\/95 {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+/* 학생 명단 관리 모달 스타일 */
+.modal-content {
+    border-radius: 1rem;
+    border: none;
+    overflow: hidden;
+}
+
+.modal-header {
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid #e2e8f0;
+    padding: 1rem 1.5rem;
+}
+
+#studentNamesTextarea {
+    border-radius: 0.5rem;
+    border: 2px solid #e2e8f0;
+    transition: border-color 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif;
+    resize: vertical;
+}
+
+#studentNamesTextarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+#studentPreview {
+    background-color: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+#studentPreview:not(:empty) {
+    border-style: solid;
+    border-color: #94a3b8;
+}
+
+.remove-student {
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.remove-student:hover {
+    opacity: 1;
+    background-color: #fef2f2 !important;
+    color: #dc2626 !important;
+}
+
+/* 미리보기 학생 항목 스타일 */
+#studentPreview .bg-light {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+#studentPreview .bg-light:hover {
+    background-color: #e2e8f0 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 반응형 모달 */
+@media (max-width: 768px) {
+    .modal-lg {
+        max-width: 95%;
+        margin: 1rem auto;
+    }
+    
+    .modal-body .row > .col-md-6 {
+        margin-bottom: 1.5rem;
+    }
+    
+    #studentNamesTextarea {
+        min-height: 200px;
+    }
+    
+    #studentPreview {
+        min-height: 200px;
+        max-height: 300px;
+    }
+}
